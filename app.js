@@ -1,3 +1,4 @@
+// Part 1 - API Integration using Axios
 const apiKey = "YOUR_API_KEY";
 const city = "London";
 
