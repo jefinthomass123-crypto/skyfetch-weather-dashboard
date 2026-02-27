@@ -1,62 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SkyFetch - Weather Dashboard</title>
-    <meta name="description" content="SkyFetch Weather Dashboard - Get real-time weather and 5-day forecast for any city worldwide." />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkyFetch Weather Dashboard</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="container">
+        <h1>SkyFetch Weather Dashboard</h1>
 
-    <!-- Background animated blobs -->
-    <div class="bg-blob blob-1"></div>
-    <div class="bg-blob blob-2"></div>
-    <div class="bg-blob blob-3"></div>
+        <!-- Current Weather -->
+        <div id="current-weather" class="current-weather"></div>
 
-    <div class="app-container">
-
-        <!-- Header -->
-        <header id="app-header">
-            <div class="logo">
-                <span class="logo-icon">⛅</span>
-                <h1>SkyFetch</h1>
-            </div>
-            <p class="tagline">Real-time weather at your fingertips</p>
-        </header>
-
-        <!-- Search Section -->
-        <section class="search-section">
-            <form id="weather-form" autocomplete="off">
-                <div class="search-wrapper">
-                    <span class="search-icon">🔍</span>
-                    <input
-                        type="text"
-                        id="city-input"
-                        placeholder="Search any city..."
-                        required
-                    />
-                    <button type="submit" id="search-btn">Search</button>
-                </div>
-            </form>
-        </section>
-
-        <!-- Weather Result Area -->
-        <main id="weather-result">
-            <!-- Welcome message shown by JS -->
-        </main>
-
-        <!-- Forecast Section -->
-        <section id="forecast-section" class="forecast-section hidden">
-            <h2 class="forecast-title">📅 5-Day Forecast</h2>
-            <div id="forecast-container" class="forecast-grid">
-                <!-- Forecast cards rendered by JS -->
-            </div>
-        </section>
-
+        <!-- Forecast -->
+        <h2>5-Day Forecast</h2>
+        <div id="forecast" class="forecast-container"></div>
     </div>
 
     <script src="app.js"></script>
