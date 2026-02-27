@@ -1,77 +1,70 @@
+// WeatherApp constructor
 function WeatherApp(apiKey) {
     this.apiKey = apiKey;
-    this.currentContainer = document.getElementById("current-weather");
-    this.forecastContainer = document.getElementById("forecast");
+    this.city = '';
+    this.currentWeatherData = null;
+    this.forecastData = null;
+
+    // Bind methods
+    this.init = this.init.bind(this);
+    this.fetchWeather = this.fetchWeather.bind(this);
 }
 
-WeatherApp.prototype.init = function () {
-    const form = document.getElementById("weather-form");
+// Initialize app with a city
+WeatherApp.prototype.init = function(city) {
+    this.city = city;
+    this.fetchWeather();
+}
 
-    form.addEventListener("submit", function (e) {
-        e.preventDefault();
-        const city = document.getElementById("city-input").value;
-        this.fetchWeather(city);
-    }.bind(this));
-};
+// Fetch current weather and 5-day forecast
+WeatherApp.prototype.fetchWeather = function() {
+    const currentUrl = `https://api.openweathermap.org/data/2.5/weather?q=${this.city}&appid=${this.apiKey}&units=metric`;
+    const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${this.city}&appid=${this.apiKey}&units=metric`;
 
-WeatherApp.prototype.fetchWeather = function (city) {
+    // Fetch both endpoints together
+    Promise.all([fetch(currentUrl), fetch(forecastUrl)])
+        .then(responses => Promise.all(responses.map(r => r.json())))
+        .then(([currentData, forecastData]) => {
+            this.currentWeatherData = currentData;
+            this.forecastData = forecastData;
+            this.renderCurrentWeather();
+            this.renderForecast();
+        })
+        .catch(err => console.error('Error fetching weather:', err));
+}
 
-    const currentUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${this.apiKey}&units=metric`;
-
-    const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${this.apiKey}&units=metric`;
-
-    Promise.all([
-        fetch(currentUrl),
-        fetch(forecastUrl)
-    ])
-    .then(responses => Promise.all(responses.map(res => res.json())))
-    .then(data => {
-        const currentData = data[0];
-        const forecastData = data[1];
-
-        this.displayCurrentWeather(currentData);
-        this.displayForecast(forecastData);
-    })
-    .catch(error => {
-        console.error("Error fetching data:", error);
-        alert("City not found. Please try again.");
-    });
-};
-
-WeatherApp.prototype.displayCurrentWeather = function (data) {
-
-    this.currentContainer.innerHTML = `
-        <h2>${data.name}</h2>
-        <p>Temperature: ${data.main.temp}°C</p>
-        <p>${data.weather[0].description}</p>
-        <img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png">
+// Render current weather
+WeatherApp.prototype.renderCurrentWeather = function() {
+    const container = document.getElementById('current-weather');
+    container.innerHTML = `
+        <h2>${this.currentWeatherData.name}</h2>
+        <p>${this.currentWeatherData.weather[0].description}</p>
+        <p>${this.currentWeatherData.main.temp}°C</p>
+        <img src="https://openweathermap.org/img/wn/${this.currentWeatherData.weather[0].icon}.png" />
     `;
-};
+}
 
-WeatherApp.prototype.displayForecast = function (data) {
+// Render 5-day forecast
+WeatherApp.prototype.renderForecast = function() {
+    const container = document.getElementById('forecast');
+    container.innerHTML = ''; // clear previous
 
-    this.forecastContainer.innerHTML = "";
+    // OpenWeatherMap forecast comes in 3-hour intervals. We'll pick one per day (every 8 items)
+    const forecastList = this.forecastData.list.filter((item, index) => index % 8 === 0);
 
-    const forecastList = data.list;
-
-    for (let i = 0; i < forecastList.length; i += 8) {
-
-        const dayData = forecastList[i];
-        const date = new Date(dayData.dt * 1000).toDateString();
-
-        const card = document.createElement("div");
-        card.classList.add("forecast-card");
-
+    forecastList.forEach(day => {
+        const card = document.createElement('div');
+        card.className = 'forecast-card';
         card.innerHTML = `
-            <h4>${date}</h4>
-            <p>${dayData.main.temp}°C</p>
-            <p>${dayData.weather[0].description}</p>
-            <img src="https://openweathermap.org/img/wn/${dayData.weather[0].icon}.png">
+            <p><strong>${new Date(day.dt_txt).toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}</strong></p>
+            <img src="https://openweathermap.org/img/wn/${day.weather[0].icon}.png" />
+            <p>${day.weather[0].description}</p>
+            <p>${day.main.temp}°C</p>
         `;
+        container.appendChild(card);
+    });
+}
 
-        this.forecastContainer.appendChild(card);
-    }
-};
-
-const app = new WeatherApp("YOUR_API_KEY");
-app.init();
+// Initialize app (replace 'YOUR_API_KEY_HERE' with your OpenWeatherMap API key)
+const app = new WeatherApp('YOUR_API_KEY_HERE');
+app.init('London'); // You can change city here
