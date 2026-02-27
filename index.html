@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>SkyFetch Weather Dashboard</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkyFetch Weather Dashboard</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-  <div class="weather-container">
-    <h1>SkyFetch Weather</h1>
-    <h2 id="city"></h2>
-    <p id="temperature"></p>
-    <p id="description"></p>
-    <img id="icon" />
-  </div>
-
-  <!-- Axios CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script src="app.js"></script>
+    <div class="weather-dashboard">
+        <h1>Weather Dashboard</h1>
+        <div class="weather-info">
+            <h2 id="city">City Name</h2>
+            <p id="temperature">Temperature: -- °C</p>
+            <p id="description">Weather: --</p>
+            <img id="icon" src="" alt="Weather Icon">
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
