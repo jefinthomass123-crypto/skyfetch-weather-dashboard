@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // WeatherApp constructor
 function WeatherApp(apiKey) {
     this.apiKey = apiKey;
@@ -68,3 +69,6 @@ WeatherApp.prototype.renderForecast = function() {
 // Initialize app (replace 'YOUR_API_KEY_HERE' with your OpenWeatherMap API key)
 const app = new WeatherApp('YOUR_API_KEY_HERE');
 app.init('London'); // You can change city here
+=======
+
+>>>>>>> 4745111c0369b2810d516850aad9aaa063782eca

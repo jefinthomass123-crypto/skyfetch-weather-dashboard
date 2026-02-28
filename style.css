@@ -1,5 +1,6 @@
 body {
     font-family: Arial, sans-serif;
+<<<<<<< HEAD
     background-color: #e0f7fa;
     margin: 0;
     padding: 0;
@@ -37,4 +38,6 @@ body {
 .forecast-card img {
     width: 50px;
     height: 50px;
+=======
+>>>>>>> 4745111c0369b2810d516850aad9aaa063782eca
 }
