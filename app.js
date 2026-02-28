@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // WeatherApp constructor
 function WeatherApp(apiKey) {
     this.apiKey = apiKey;
@@ -48,7 +47,7 @@ WeatherApp.prototype.renderCurrentWeather = function() {
 // Render 5-day forecast
 WeatherApp.prototype.renderForecast = function() {
     const container = document.getElementById('forecast');
-    container.innerHTML = ''; // clear previous
+    container.innerHTML = '';
 
     // OpenWeatherMap forecast comes in 3-hour intervals. We'll pick one per day (every 8 items)
     const forecastList = this.forecastData.list.filter((item, index) => index % 8 === 0);
@@ -68,7 +67,4 @@ WeatherApp.prototype.renderForecast = function() {
 
 // Initialize app (replace 'YOUR_API_KEY_HERE' with your OpenWeatherMap API key)
 const app = new WeatherApp('YOUR_API_KEY_HERE');
-app.init('London'); // You can change city here
-=======
-
->>>>>>> 4745111c0369b2810d516850aad9aaa063782eca
+app.init('London');
